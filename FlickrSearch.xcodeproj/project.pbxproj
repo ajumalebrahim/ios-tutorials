@@ -40,6 +40,7 @@
 		D4AB8B13161B3B5700D27EA6 /* search_field@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AB8AFF161B3B5700D27EA6 /* search_field@2x.png */; };
 		D4AB8B14161B3B5700D27EA6 /* search_text.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AB8B00161B3B5700D27EA6 /* search_text.png */; };
 		D4AB8B15161B3B5700D27EA6 /* search_text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AB8B01161B3B5700D27EA6 /* search_text@2x.png */; };
+		D4AB8B1C161CB0A200D27EA6 /* FlickrPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AB8B1B161CB0A200D27EA6 /* FlickrPhotoCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,8 @@
 		D4AB8AFF161B3B5700D27EA6 /* search_field@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_field@2x.png"; sourceTree = "<group>"; };
 		D4AB8B00161B3B5700D27EA6 /* search_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_text.png; sourceTree = "<group>"; };
 		D4AB8B01161B3B5700D27EA6 /* search_text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_text@2x.png"; sourceTree = "<group>"; };
+		D4AB8B1A161CB0A200D27EA6 /* FlickrPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPhotoCell.h; sourceTree = "<group>"; };
+		D4AB8B1B161CB0A200D27EA6 /* FlickrPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotoCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +143,8 @@
 		D4AB8AD0161B3ADE00D27EA6 /* FlickrSearch */ = {
 			isa = PBXGroup;
 			children = (
+				D4AB8B1A161CB0A200D27EA6 /* FlickrPhotoCell.h */,
+				D4AB8B1B161CB0A200D27EA6 /* FlickrPhotoCell.m */,
 				D4AB8AD9161B3ADE00D27EA6 /* AppDelegate.h */,
 				D4AB8ADA161B3ADE00D27EA6 /* AppDelegate.m */,
 				D4AB8AE2161B3ADE00D27EA6 /* MainStoryboard.storyboard */,
@@ -284,6 +289,7 @@
 				D4AB8AE7161B3ADE00D27EA6 /* ViewController.m in Sources */,
 				D4273122161BD7D8009F5C0B /* Flickr.m in Sources */,
 				D4273123161BD7D8009F5C0B /* FlickrPhoto.m in Sources */,
+				D4AB8B1C161CB0A200D27EA6 /* FlickrPhotoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
