@@ -7,16 +7,25 @@
 //
 
 #import "FlickrPhotoCell.h"
+#import "FlickrPhoto.h"
 
 @implementation FlickrPhotoCell
 
 - (id)initWithFrame:(CGRect)frame
 {
+	NSLog(@"%@", @"blarg");
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
     }
     return self;
+}
+
+-(void) setPhoto:(FlickrPhoto *)photo {
+	if (_photo != photo) {
+		_photo = photo;
+	}
+	self.imageView.image = _photo.thumbnail;
 }
 
 /*

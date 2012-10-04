@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -54,9 +54,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="PHS-iq-zTj">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="239" id="E73-uE-VVb"/>
-                                                    </constraints>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" image="pushpin.png" translatesAutoresizingMaskIntoConstraints="NO" id="uGx-5S-ldz">
                                                     <constraints>
@@ -68,12 +66,12 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PHS-iq-zTj" secondAttribute="bottom" constant="20" type="user" id="87R-GQ-BDz"/>
-                                            <constraint firstItem="uGx-5S-ldz" firstAttribute="top" secondItem="159-vm-U1u" secondAttribute="top" type="default" id="8y2-fo-ajH"/>
-                                            <constraint firstAttribute="bottom" secondItem="PHS-iq-zTj" secondAttribute="bottom" constant="20" type="default" id="HCd-Pv-vH2"/>
-                                            <constraint firstAttribute="trailing" secondItem="PHS-iq-zTj" secondAttribute="trailing" constant="20" type="default" id="Kj4-Rw-Kjq"/>
-                                            <constraint firstItem="PHS-iq-zTj" firstAttribute="leading" secondItem="159-vm-U1u" secondAttribute="leading" constant="20" type="default" id="Wt1-XE-lc3"/>
-                                            <constraint firstItem="uGx-5S-ldz" firstAttribute="centerX" secondItem="PHS-iq-zTj" secondAttribute="centerX" type="default" id="hyu-JB-bfl"/>
+                                            <constraint firstItem="PHS-iq-zTj" firstAttribute="top" secondItem="159-vm-U1u" secondAttribute="top" constant="20" type="default" id="0ye-67-F3N"/>
+                                            <constraint firstItem="uGx-5S-ldz" firstAttribute="centerX" secondItem="PHS-iq-zTj" secondAttribute="centerX" type="default" id="DSl-qv-m8s"/>
+                                            <constraint firstAttribute="bottom" secondItem="PHS-iq-zTj" secondAttribute="bottom" constant="20" type="default" id="HaN-gu-5p2"/>
+                                            <constraint firstAttribute="trailing" secondItem="PHS-iq-zTj" secondAttribute="trailing" constant="20" type="default" id="HqE-Bp-b7u"/>
+                                            <constraint firstItem="PHS-iq-zTj" firstAttribute="leading" secondItem="159-vm-U1u" secondAttribute="leading" constant="20" type="default" id="HxC-WU-LmS"/>
+                                            <constraint firstItem="uGx-5S-ldz" firstAttribute="top" secondItem="159-vm-U1u" secondAttribute="top" type="default" id="gIz-ds-qEa"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="PHS-iq-zTj" id="8Yf-8J-GYz"/>
