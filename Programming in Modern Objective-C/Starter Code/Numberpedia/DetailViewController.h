@@ -1,5 +1,7 @@
 @class DetailViewController;
 
+@class Item;
+
 typedef void (^DetailViewControllerCompletionBlock)(BOOL success);
 
 @interface DetailViewController : UIViewController
@@ -8,9 +10,6 @@ typedef void (^DetailViewControllerCompletionBlock)(BOOL success);
 
 @property (nonatomic, copy) DetailViewControllerCompletionBlock completionBlock;
 
-@property (nonatomic, copy) NSString *sectionName;
-@property (nonatomic, assign) NSUInteger indexInSection;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSNumber *value;
+@property (nonatomic, strong) Item *itemToEdit;
 
 @end

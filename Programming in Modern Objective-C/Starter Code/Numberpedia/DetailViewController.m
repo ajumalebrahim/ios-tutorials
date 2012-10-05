@@ -1,5 +1,6 @@
 
 #import "DetailViewController.h"
+#import "Item.h"
 
 @interface DetailViewController ()
 
@@ -14,8 +15,8 @@
 {
 	[super viewDidLoad];
 
-	self.navigationBar.topItem.title = self.name;
-	self.textField.text = [self.value description];
+	self.navigationBar.topItem.title = self.itemToEdit.name;
+	self.textField.text = [self.itemToEdit.value description];
 
 	[self.textField becomeFirstResponder];
 }
@@ -39,11 +40,8 @@
 	[formatter setNumberStyle:NSNumberFormatterDecimalStyle];
 	NSNumber *newValue = [formatter numberFromString:self.textField.text];
 
-	if (newValue != nil)
-		self.value = newValue;
-	else
-		self.value = [NSNumber numberWithInt:0];
-
+	self.itemToEdit.value = (newValue != nil) ? newValue : @0;
+	
 	if (self.completionBlock != nil)
 		self.completionBlock(YES);
 }

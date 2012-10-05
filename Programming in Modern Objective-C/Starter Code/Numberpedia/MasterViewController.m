@@ -1,5 +1,7 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "NSDictionary+RWFlatten.h"
+#import "Item.h"
 
 @interface MasterViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -10,83 +12,52 @@
 @implementation MasterViewController 
 {
 	// Private instance variables
-	NSDictionary *namesDictionary;
-	NSMutableDictionary *valuesDictionary;
+	NSDictionary *dictionary;
 	NSArray *sortedSectionNames;
 	
 	// For the "sorted by value" screen
 	BOOL sortedByName;
-	NSArray *sortedNames;
-	NSArray *sortedValues;
+	NSArray *sortedItems;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if ((self = [super initWithCoder:aDecoder]))
 	{
-		NSArray *physicsNames = [NSArray arrayWithObjects:
-			@"Avogadro",
-			@"Boltzman",
-			@"Planck",
-			@"Rydberg",
-			nil];
-
-		NSArray *physicsValues = [NSArray arrayWithObjects:
-			[NSNumber numberWithDouble:6.02214129e23],
-			[NSNumber numberWithDouble:1.3806503e-23],
-			[NSNumber numberWithDouble:6.626068e-34],
-			[NSNumber numberWithDouble:1.097373e-7],
-			nil];
-
-		NSArray *mathematicsNames = [NSArray arrayWithObjects:
-			@"e",
-			@"Pi (π)",
-			@"Pythagoras’ constant",
-			@"Tau (τ)",
-			nil];
-
-		NSArray *mathematicsValues = [NSArray arrayWithObjects:
-			[NSNumber numberWithFloat:2.71828183],
-			[NSNumber numberWithFloat:3.14159265],
-			[NSNumber numberWithFloat:1.414213562],
-			[NSNumber numberWithFloat:6.2831853],
-			nil];
-
-		NSArray *funNames = [NSArray arrayWithObjects:
-			@"Absolute Zero",
-			@"Beverly Hills",
-			@"Golden Ratio",
-			@"Number of Human Bones",
-			@"Unlucky Number",
-			nil];
-
-		NSArray *funValues = [NSArray arrayWithObjects:
-			[NSNumber numberWithFloat:-273.15],
-			[NSNumber numberWithInt:90210],
-			[NSNumber numberWithFloat:1.618],
-			[NSNumber numberWithInt:214],
-			[NSNumber numberWithInt:13],
-			nil];
-
-		namesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-			physicsNames, @"Physics Constants",
-			mathematicsNames, @"Mathematics",
-			funNames, @"Fun Numbers",
-			nil];
-
-		valuesDictionary = [[NSDictionary dictionaryWithObjectsAndKeys:
-			physicsValues, @"Physics Constants",
-			mathematicsValues, @"Mathematics",
-			funValues, @"Fun Numbers",
-			nil] mutableCopy];
-
-		sortedSectionNames = [[namesDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)];
-
+		NSArray *physics = @[
+			[Item itemWithName:@"Avogadro" value:@6.02214129e23],
+			[Item itemWithName:@"Boltzman" value:@1.3806503e-23],
+			[Item itemWithName:@"Planck" value:@6.626068e-34],
+			[Item itemWithName:@"Rydberg" value:@1.097373e-7]
+		];
+		
+		NSArray *mathematics = @[
+			[Item itemWithName:@"e" value:@2.71828183],
+			[Item itemWithName:@"π" value:@3.14159265],
+			[Item itemWithName:@"Pythagoras’ constant" value:@1.414213562],
+			[Item itemWithName:@"Tau (τ)" value:@6.2831853]
+		];
+		
+		NSArray *fun = @[
+			[Item itemWithName:@"Absolute Zero" value:@-273.15],
+			[Item itemWithName:@"Beverly Hills" value:@90210],
+			[Item itemWithName:@"Golden Ratio" value:@1.618],
+			[Item itemWithName:@"Number of Human Bones" value:@214],
+			[Item itemWithName:@"Unlucky Number" value:@13]
+		];
+		
+		dictionary = @{
+			@"Physics Constants" : physics,
+			@"Mathematics" : mathematics,
+			@"Fun Numbers" : fun,
+		};
+		
+		sortedSectionNames = [[dictionary allKeys] sortedArrayUsingSelector:@selector(compare:)];
+		
 		sortedByName = YES;
 	}
 	return self;
 }
-
 
 - (void)viewDidLoad
 {
@@ -111,8 +82,7 @@
 	{
 		NSLog(@"will unload view");
 		self.view = nil;
-		sortedNames = nil;
-		sortedValues = nil;
+		sortedItems = nil;
 	}
 }
 
@@ -133,57 +103,22 @@
 		{
 			if (success)
 			{
-				NSMutableArray *valuesArray = [[valuesDictionary objectForKey:controller.sectionName] mutableCopy];
-				[valuesArray replaceObjectAtIndex:controller.indexInSection withObject:controller.value];
-				[valuesDictionary setObject:valuesArray forKey:controller.sectionName];
-				
-				// This will cause the table of values to be // resorted if necessary.
-				sortedNames = nil;
+				sortedItems = nil;
 				[self updateTableContents];
 			}
-			
 			[self dismissViewControllerAnimated:YES completion:nil];
 		};
 		
 		UITableViewCell *cell = sender;
-			
 		NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-
+		
 		if (sortedByName)
 		{
-			NSString *sectionName = [sortedSectionNames objectAtIndex:indexPath.section];
-			controller.sectionName = sectionName;
-			controller.indexInSection = indexPath.row;
-
-			NSArray *namesArray = [namesDictionary objectForKey:sectionName];
-			controller.name = [namesArray objectAtIndex:indexPath.row];
-
-			NSArray *valuesArray = [valuesDictionary objectForKey:sectionName];
-			controller.value = [valuesArray objectAtIndex:indexPath.row];
-		}
-		else
-		{
-			NSString *name = [sortedNames objectAtIndex:indexPath.row];
-			controller.name = name;
-
-			NSNumber *value = [sortedValues objectAtIndex:indexPath.row];
-			controller.value = value;
-
-			// For the "Sorted by Value" list we have to look up in which
-			// section the name and value belong, and what their index is
-			// in the array.
-
-			for (NSString *sectionName in namesDictionary)
-			{
-				NSArray *array = [namesDictionary objectForKey:sectionName];
-				NSInteger index = [array indexOfObject:name];
-				if (index != NSNotFound)
-				{
-					controller.sectionName = sectionName;
-					controller.indexInSection = index;
-					break;
-				}
-			}
+			NSString *sectionName = sortedSectionNames[indexPath.section];
+			NSArray *itemsArray = dictionary[sectionName];
+			controller.itemToEdit = itemsArray[indexPath.row];
+		} else {
+			controller.itemToEdit = sortedItems[indexPath.row];
 		}
 	}
 }
@@ -203,7 +138,7 @@
 - (void)updateTableContents
 {
 	// Lazily sort the list by value if we haven't done that yet.
-	if (!sortedByName && sortedNames == nil)
+	if (!sortedByName && sortedItems == nil)
 	{
 		[self sortByValue];
 	}
@@ -213,38 +148,9 @@
 
 - (void)sortByValue
 {
-
-	// First put all the values into one big array.
-	NSMutableArray *allValues = [NSMutableArray arrayWithCapacity:50];
-	for (NSString *key in valuesDictionary)
-	{
-		NSArray *array = [valuesDictionary objectForKey:key];
-		[allValues addObjectsFromArray:array];
-	}
-
-	// Also put all the names into a big array. The order of the names
-	// in this array corresponds to the order of values in "allValues".
-	NSMutableArray *allNames = [NSMutableArray arrayWithCapacity:50];
-	for (NSString *key in namesDictionary)
-	{
-		NSArray *array = [namesDictionary objectForKey:key];
-		[allNames addObjectsFromArray:array];
-	}
-
-	// Sort the array of values.
-	sortedValues = [allValues sortedArrayUsingSelector:@selector(compare:)];
-
-	// We have to put the names in the same order as the sorted values.
-	// For each sorted value, find its index in the un-sorted allValues
-	// array, then use that index to find the name from allNames.
-	NSMutableArray *theSortedNames = [NSMutableArray arrayWithCapacity:[sortedValues count]];
-	for (NSNumber *number in sortedValues)
-	{
-		NSUInteger index = [allValues indexOfObject:number];
-		[theSortedNames addObject:[allNames objectAtIndex:index]];
-	}
-
-	sortedNames = theSortedNames;
+	
+	NSArray *allItems = [dictionary rw_flattenIntoArray];
+	sortedItems = [allItems sortedArrayUsingSelector:@selector(compare:)];
 }
 
 #pragma mark - UITableViewDataSource
@@ -260,7 +166,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if (sortedByName)
-		return [sortedSectionNames objectAtIndex:section];
+		return sortedSectionNames[section];
 	else
 		return nil;
 }
@@ -269,36 +175,34 @@
 {
 	if (sortedByName)
 	{
-		NSString *sectionName = [sortedSectionNames objectAtIndex:section];
-		return [[namesDictionary objectForKey:sectionName] count];
+		NSString *sectionName = sortedSectionNames[section];
+		return [dictionary[sectionName] count];
 	}
 	else
 	{
-		return [sortedValues count];
+		return [sortedItems count];
 	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NumberCell"];
+	
+	Item *item;
 
 	if (sortedByName)
 	{
-		NSString *sectionName = [sortedSectionNames objectAtIndex:indexPath.section];
+		NSString *sectionName = sortedSectionNames[indexPath.section];
 
-		NSArray *namesArray = [namesDictionary objectForKey:sectionName];
-		cell.textLabel.text = [namesArray objectAtIndex:indexPath.row];
-
-		NSArray *valuesArray = [valuesDictionary objectForKey:sectionName];
-		NSNumber *value = [valuesArray objectAtIndex:indexPath.row];
-		cell.detailTextLabel.text = [value description];
+		NSArray *itemsArray = dictionary[sectionName];
+		item = itemsArray[indexPath.row];
+		
+	} else {
+		item = sortedItems[indexPath.row];
 	}
-	else
-	{
-		cell.textLabel.text = [sortedNames objectAtIndex:indexPath.row];
-		NSNumber *value = [sortedValues objectAtIndex:indexPath.row];
-		cell.detailTextLabel.text = [value description];
-	}
+		
+	cell.textLabel.text = item.name;
+	cell.detailTextLabel.text = [item.value description];
 
 	return cell;
 }
