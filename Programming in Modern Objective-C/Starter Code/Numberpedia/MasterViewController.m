@@ -2,6 +2,8 @@
 #import "DetailViewController.h"
 #import "NSDictionary+RWFlatten.h"
 #import "Item.h"
+#import "Section.h"
+#import "DataModel.h"
 
 @interface MasterViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -11,49 +13,15 @@
 
 @implementation MasterViewController 
 {
-	// Private instance variables
-	NSDictionary *dictionary;
-	NSArray *sortedSectionNames;
-	
-	// For the "sorted by value" screen
+	DataModel *dataModel;
 	BOOL sortedByName;
-	NSArray *sortedItems;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if ((self = [super initWithCoder:aDecoder]))
 	{
-		NSArray *physics = @[
-			[Item itemWithName:@"Avogadro" value:@6.02214129e23],
-			[Item itemWithName:@"Boltzman" value:@1.3806503e-23],
-			[Item itemWithName:@"Planck" value:@6.626068e-34],
-			[Item itemWithName:@"Rydberg" value:@1.097373e-7]
-		];
-		
-		NSArray *mathematics = @[
-			[Item itemWithName:@"e" value:@2.71828183],
-			[Item itemWithName:@"π" value:@3.14159265],
-			[Item itemWithName:@"Pythagoras’ constant" value:@1.414213562],
-			[Item itemWithName:@"Tau (τ)" value:@6.2831853]
-		];
-		
-		NSArray *fun = @[
-			[Item itemWithName:@"Absolute Zero" value:@-273.15],
-			[Item itemWithName:@"Beverly Hills" value:@90210],
-			[Item itemWithName:@"Golden Ratio" value:@1.618],
-			[Item itemWithName:@"Number of Human Bones" value:@214],
-			[Item itemWithName:@"Unlucky Number" value:@13]
-		];
-		
-		dictionary = @{
-			@"Physics Constants" : physics,
-			@"Mathematics" : mathematics,
-			@"Fun Numbers" : fun,
-		};
-		
-		sortedSectionNames = [[dictionary allKeys] sortedArrayUsingSelector:@selector(compare:)];
-		
+		dataModel = [[DataModel alloc] init];
 		sortedByName = YES;
 	}
 	return self;
@@ -82,7 +50,7 @@
 	{
 		NSLog(@"will unload view");
 		self.view = nil;
-		sortedItems = nil;
+		[dataModel clearSortedItems];
 	}
 }
 
@@ -103,7 +71,7 @@
 		{
 			if (success)
 			{
-				sortedItems = nil;
+				[dataModel clearSortedItems];
 				[self updateTableContents];
 			}
 			[self dismissViewControllerAnimated:YES completion:nil];
@@ -114,11 +82,11 @@
 		
 		if (sortedByName)
 		{
-			NSString *sectionName = sortedSectionNames[indexPath.section];
-			NSArray *itemsArray = dictionary[sectionName];
-			controller.itemToEdit = itemsArray[indexPath.row];
+			NSString *sectionName = dataModel[indexPath.section];
+			Section *section = dataModel[sectionName];
+			controller.itemToEdit = section[indexPath.row];
 		} else {
-			controller.itemToEdit = sortedItems[indexPath.row];
+			controller.itemToEdit = dataModel.sortedItems[indexPath.row];
 		}
 	}
 }
@@ -138,19 +106,12 @@
 - (void)updateTableContents
 {
 	// Lazily sort the list by value if we haven't done that yet.
-	if (!sortedByName && sortedItems == nil)
+	if (!sortedByName && dataModel.sortedItems == nil)
 	{
-		[self sortByValue];
+		[dataModel sortByValue];
 	}
 
 	[self.tableView reloadData];
-}
-
-- (void)sortByValue
-{
-	
-	NSArray *allItems = [dictionary rw_flattenIntoArray];
-	sortedItems = [allItems sortedArrayUsingSelector:@selector(compare:)];
 }
 
 #pragma mark - UITableViewDataSource
@@ -158,7 +119,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	if (sortedByName)
-		return [sortedSectionNames count];
+		return [dataModel.sortedSectionNames count];
 	else
 		return 1;
 }
@@ -166,7 +127,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if (sortedByName)
-		return sortedSectionNames[section];
+		return dataModel.sortedSectionNames[section];
 	else
 		return nil;
 }
@@ -175,12 +136,13 @@
 {
 	if (sortedByName)
 	{
-		NSString *sectionName = sortedSectionNames[section];
-		return [dictionary[sectionName] count];
+		NSString *sectionName = dataModel[section];
+		Section *section = dataModel[sectionName];
+		return [section.items count];
 	}
 	else
 	{
-		return [sortedItems count];
+		return [dataModel.sortedItems count];
 	}
 }
 
@@ -192,13 +154,12 @@
 
 	if (sortedByName)
 	{
-		NSString *sectionName = sortedSectionNames[indexPath.section];
-
-		NSArray *itemsArray = dictionary[sectionName];
-		item = itemsArray[indexPath.row];
+		NSString *sectionName = dataModel[indexPath.section];
+		Section *section = dataModel[sectionName];
+		item = section[indexPath.row];
 		
 	} else {
-		item = sortedItems[indexPath.row];
+		item = dataModel.sortedItems[indexPath.row];
 	}
 		
 	cell.textLabel.text = item.name;

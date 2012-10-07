@@ -21,6 +21,8 @@
 		7B90E566158F6446008A30C4 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B90E565158F6446008A30C4 /* DetailViewController.m */; };
 		7B90E56F158F7C4E008A30C4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B90E56D158F7C4E008A30C4 /* Icon.png */; };
 		7B90E570158F7C4E008A30C4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B90E56E158F7C4E008A30C4 /* Icon@2x.png */; };
+		D409375516210AAA000D3507 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = D409375316210A02000D3507 /* Section.m */; };
+		D409375816210C24000D3507 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D409375716210C24000D3507 /* DataModel.m */; };
 		D4D1C55E161E1FF200C10D10 /* NSDictionary+RWFlatten.m in Sources */ = {isa = PBXBuildFile; fileRef = D4D1C55D161E1FF200C10D10 /* NSDictionary+RWFlatten.m */; };
 		D4D1C562161F418100C10D10 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D4D1C561161F418100C10D10 /* Item.m */; };
 /* End PBXBuildFile section */
@@ -46,6 +48,10 @@
 		7B90E565158F6446008A30C4 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		7B90E56D158F7C4E008A30C4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		7B90E56E158F7C4E008A30C4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		D409375216210A02000D3507 /* Section.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Section.h; sourceTree = "<group>"; };
+		D409375316210A02000D3507 /* Section.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Section.m; sourceTree = "<group>"; };
+		D409375616210C24000D3507 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
+		D409375716210C24000D3507 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		D4D1C55C161E1FF200C10D10 /* NSDictionary+RWFlatten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RWFlatten.h"; sourceTree = "<group>"; };
 		D4D1C55D161E1FF200C10D10 /* NSDictionary+RWFlatten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+RWFlatten.m"; sourceTree = "<group>"; };
 		D4D1C560161F418100C10D10 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
@@ -102,12 +108,16 @@
 				7B51472E158F244B005A8F5E /* MainStoryboard.storyboard */,
 				7B514731158F244B005A8F5E /* MasterViewController.h */,
 				7B514732158F244B005A8F5E /* MasterViewController.m */,
+				D409375616210C24000D3507 /* DataModel.h */,
+				D409375716210C24000D3507 /* DataModel.m */,
 				D4D1C560161F418100C10D10 /* Item.h */,
 				D4D1C561161F418100C10D10 /* Item.m */,
 				D4D1C55C161E1FF200C10D10 /* NSDictionary+RWFlatten.h */,
 				D4D1C55D161E1FF200C10D10 /* NSDictionary+RWFlatten.m */,
 				7B90E564158F6446008A30C4 /* DetailViewController.h */,
 				7B90E565158F6446008A30C4 /* DetailViewController.m */,
+				D409375216210A02000D3507 /* Section.h */,
+				D409375316210A02000D3507 /* Section.m */,
 				7B514723158F244B005A8F5E /* Supporting Files */,
 			);
 			path = Numberpedia;
@@ -210,6 +220,8 @@
 				7B90E566158F6446008A30C4 /* DetailViewController.m in Sources */,
 				D4D1C55E161E1FF200C10D10 /* NSDictionary+RWFlatten.m in Sources */,
 				D4D1C562161F418100C10D10 /* Item.m in Sources */,
+				D409375516210AAA000D3507 /* Section.m in Sources */,
+				D409375816210C24000D3507 /* DataModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
